@@ -4,7 +4,7 @@
 # NZBFile Categoryparser scan script for NZBGET
 #
 # Author of the collected code snippets: <wusamba a@t gmail d.t com>
-# Adapted from NZBPass.py to NZBCategory.py by ProfDrLuigi
+# NOTE: Adapted from NZBPass.py to NZBCategory.py by ProfDrLuigi
 #
 # $Revision: 140 $
 # $Date: 2013-06-12 09:41:23 +0200 (Mon, 04 Aug 2014) $
@@ -38,7 +38,7 @@
 # This script is setting the Category from the filename and removes it from NZB Name: file*[[category]]*.nzb
 #
 #
-# Adapted from NZBPass.py to NZBCategory.py by Sascha_77
+# NOTE: Adapted from NZBPass.py to NZBCategory.py by ProfDrLuigi
 #
 #
 # NOTE: This script requires Python (v2 or later) to be installed on your system.
