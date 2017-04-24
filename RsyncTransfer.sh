@@ -20,21 +20,31 @@
 ################################################################################
 ### OPTIONS                                                                  ###
 
-# Should the Sourcefile(s) be deleted after Transfer (yes, no).
-#Delete=No
+# Select your protocol (SSH, FTP).
+#Protocol=SSH
 
-# rsync/SSH Port on destination Machine(1-65535).
-#Port=22
+# Password authentication on SSH(yes, no).
+#Passauth=no
 
-# Remote Hostname
+# Remote hostname
 #Hostname=your.hostname.xy
 
-# Remote username.
-#Username=Your Username
+# rsync/SSH Port on destination Machine(1-65535).
+# Default for SSH=22 FTP=21 SMB=?
+#Port=22
 
-# Remote path.
+# Remote username
+#Username=
+
+# Password
+#Password=
+
+# Remote path destination.
 # (trailing / is not needed)
-#Path=Destinationpath
+#Destination=
+
+# Delete Sourcefile(s) after Transfer (yes, no).
+#Delete=No
 
 ### NZBGET POST-PROCESSING SCRIPT                                            ###
 ################################################################################
