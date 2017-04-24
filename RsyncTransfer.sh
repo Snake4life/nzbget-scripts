@@ -10,10 +10,11 @@
 # Version 1.0 by ProfDrLuigi
 #
 #
-# To run this script you need:
+# NOTE: Important note for running this Script you need the following:
+#
 # - rsync
 #
-# For now you need SSH Keyfile-Autologin (ssh-keygen) to the destination
+# - For now you need SSH Keyfile-Autologin (ssh-keygen) to the destination
 # Server. Log/Pass authentication is planned in future Versions of this
 # Script.
 
