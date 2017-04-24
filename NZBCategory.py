@@ -4,7 +4,7 @@
 # NZBFile Categoryparser scan script for NZBGET
 #
 # Author of the collected code snippets: <wusamba a@t gmail d.t com>
-# Adapted from NZBPass.py to NZBCategory.py by Sascha_77
+# Adapted from NZBPass.py to NZBCategory.py by ProfDrLuigi
 #
 # $Revision: 140 $
 # $Date: 2013-06-12 09:41:23 +0200 (Mon, 04 Aug 2014) $
