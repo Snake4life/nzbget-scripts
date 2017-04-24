@@ -40,10 +40,10 @@
 #Password=
 
 # Remote path destination.
-# (trailing / is not needed)
+# Trailing "/" is not needed
 #Destination=
 
-# Delete Sourcefile(s) after Transfer (yes, no).
+# Delete Sourcefile(s) after successful Transfer (yes, no).
 #Delete=No
 
 ### NZBGET POST-PROCESSING SCRIPT                                            ###
