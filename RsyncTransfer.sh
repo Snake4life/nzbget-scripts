@@ -20,31 +20,32 @@
 ################################################################################
 ### OPTIONS                                                                  ###
 
-# Should the Sourcefile(s) be deleted after Transfer (y/n)?
-#Delete=n
+# Should the Sourcefile(s) be deleted after Transfer (yes, no).
+#Delete=No
 
-# rsync/SSH Port on destination Machine (default is 22)
+# rsync/SSH Port on destination Machine(1-65535).
 #Port=22
 
 # Remote Hostname
 #Hostname=your.hostname.xy
 
-# Remote Username
-#User=Your Username
+# Remote username.
+#Username=Your Username
 
-# Remote Path (trailing / is not needed)
+# Remote path.
+# (trailing / is not needed)
 #Path=Destinationpath
 
 ### NZBGET POST-PROCESSING SCRIPT                                            ###
 ################################################################################
 
 src="$NZBPP_DIRECTORY"
-dest="$NZBPO_User@$NZBPO_Hostname:$NZBPO_Path/"
+dest="$NZBPO_Username@$NZBPO_Hostname:$NZBPO_Path/"
 
 rsync ${opts[@]} --progress -av -e "ssh -p $NZBPO_Port" "$src" "$dest" | stdbuf -oL tr '\r' '\n'
 
 if [ $? = 0 ]; then
-   if [[ $NZBPO_Delete = "y" ]]; then
+   if [[ $NZBPO_Delete = "yes" ]]; then
    rm -r "$NZBPP_DIRECTORY"
    fi
 else
