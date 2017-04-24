@@ -7,7 +7,7 @@
 
 # Transmit downloaded Files via rsync to another place.
 #
-# Version 1.0 by ProfDrLuigi
+# Version 1.0(b) by ProfDrLuigi
 #
 #
 # NOTE: Important note for running this Script you need the following:
