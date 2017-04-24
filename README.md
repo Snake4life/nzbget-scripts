@@ -1,5 +1,5 @@
 # nzbget-scripts
 
-RsyncTransfer.sh: Send your downloaded files to another Machine via rsync.
+ReTransfer.sh: Send your downloaded files to another Machine via rsync.
 
 NZBCategory.py: Get the Categoryname from the nzb-file.
