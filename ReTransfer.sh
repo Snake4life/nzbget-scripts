@@ -20,8 +20,9 @@
 ################################################################################
 ### OPTIONS                                                                  ###
 
-# Select your protocol (SSH, FTP).
-#Protocol=SSH
+# Select transfer mode (Rsync, SCP, FTP, Local).
+# Local means e.g. mounted SMB-Shares etc.
+#Protocol=Rsync
 
 # Password authentication on SSH(yes, no).
 #Passauth=no
@@ -30,7 +31,7 @@
 #Hostname=your.hostname.xy
 
 # rsync/SSH Port on destination Machine(1-65535).
-# Default for SSH=22 FTP=21 SMB=?
+# Default for rsync/SCP=22 FTP=21
 #Port=22
 
 # Remote username
@@ -52,14 +53,63 @@
 src="$NZBPP_DIRECTORY"
 dest="$NZBPO_Username@$NZBPO_Hostname:$NZBPO_Path/"
 
-rsync ${opts[@]} --progress -av -e "ssh -p $NZBPO_Port" "$src" "$dest" | stdbuf -oL tr '\r' '\n'
+if [[ $NZBPO_Protocol = "Rsync" ]]; then
+   if [[ $NZBPO_Passauth = "no" ]]; then
+   rsync ${opts[@]} --progress -av -e "ssh -p $NZBPO_Port" "$src" "$dest" | stdbuf -oL tr '\r' '\n'
+      if [ $? = 1 ]; then
+      touch _error_
+      fi
+   else
+   echo "Transfer with auth"
+      if [ $? = 1 ]; then
+      touch _error_
+      fi
+   fi
+fi
 
+if [[ $NZBPO_Protocol = "SCP" ]]; then
+   if [[ $NZBPO_Passauth = "no" ]]; then
+   scp -P $NZBPO_Port "$src" "$dest"
+      if [ $? = 1 ]; then
+      touch _error_
+      fi
+   else
+   echo "Transfer with auth"
+      if [ $? = 1 ]; then
+      touch _error_
+      fi
+   fi
+fi
+
+if [[ $NZBPO_Protocol = "FTP" ]]; then
+   if [[ $NZBPO_Passauth = "no" ]]; then
+   ftp anonymous -r "$src" "$dest"
+      if [ $? = 1 ]; then
+      touch _error_
+      fi
+   else
+   ftp user/password -r "$src" "$dest"
+      if [ $? = 1 ]; then
+      touch _error_
+      fi
+   fi
+fi
+
+if [[ $NZBPO_Protocol = "Local" ]]; then
+   cp --args -r "$src" "$dest"
+      if [ $? = 1 ]; then
+      touch _error_
+      fi
+fi
+
+if [ -f _error_ ]; then
+rm _error_
+exit 94
+else
 if [ $? = 0 ]; then
    if [[ $NZBPO_Delete = "yes" ]]; then
    rm -r "$NZBPP_DIRECTORY"
    fi
-else
-   exit 94
 fi
 
 exit 93
