@@ -81,17 +81,29 @@ if [[ $NZBPO_Protocol = "SCP" ]]; then
    fi
 fi
 
+
+
 if [[ $NZBPO_Protocol = "FTP" ]]; then
    if [[ $NZBPO_Passauth = "no" ]]; then
-   ftp anonymous -r "$src" "$dest"
+   echo "open $NZBPO_Hostname" > ftp.cmd
+   echo "user anonymous" >> ftp.cmd
+   echo "put $src $dest" >> ftp.cmd
+   echo "bye" >> ftp.cmd 
+   ftp -n < ftp.cmd
       if [ $? = 1 ]; then
       touch _error_
       fi
+   rm ftp.cmd
    else
-   ftp user/password -r "$src" "$dest"
+   echo "open $NZBPO_Hostname" > ftp.cmd
+   echo "user $NZBPO_Username $NZBPO_Password" >> ftp.cmd
+   echo "put $src $dest" >> ftp.cmd
+   echo "bye" >> ftp.cmd 
+   ftp -n < ftp.cmd
       if [ $? = 1 ]; then
       touch _error_
       fi
+   rm ftp.cmd
    fi
 fi
 
