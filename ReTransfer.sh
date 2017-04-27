@@ -7,10 +7,14 @@
 
 # Transmit downloaded Files via rsync to another place.
 #
-# Version 1.0(b) by ProfDrLuigi
+# Version 1.1 by ProfDrLuigi
 #
+#
+# This script is meant to be used with a Unix/POSIX System. If you want to
+# adapt it for Windows dont hesitate to do it. (-:
 #
 # NOTE: Important note for running this Script you need the following:
+#
 # - rsync (in case you want to use SSH/Rsync Transfer).
 #
 # - ncftpput (in case you want to use FTP Transfer).
@@ -27,7 +31,7 @@
 # Local means e.g. mounted SMB-Shares etc.
 #Protocol=Rsync
 
-# Password authentication on SSH(yes, no).
+# Password authentication(yes, no).
 #Passauth=no
 
 # Remote hostname
