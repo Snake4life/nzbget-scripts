@@ -11,12 +11,14 @@
 #
 #
 # NOTE: Important note for running this Script you need the following:
-# - rsync
-# - lftp (in case you want to use FTP Transfer)
+# - rsync (in case you want to use SSH/Rsync Transfer).
 #
-# - For now you need SSH Keyfile-Autologin (ssh-keygen) to the destination
-# Server. Log/Pass authentication is planned in future Versions of this
-# Script.
+# - ncftpput (in case you want to use FTP Transfer).
+# NOTE: ncftpput is normally provided with the "ncftp"-Package
+#
+#
+# - sshpass (in case you want to transfer via rsync/scp without using
+#   key authentication).
 
 ################################################################################
 ### OPTIONS                                                                  ###
@@ -52,7 +54,7 @@
 ################################################################################
 
 src="$NZBPP_DIRECTORY"
-dest="$NZBPO_Path/"
+dest="$NZBPO_Path"
 destssh="$NZBPO_Username@$NZBPO_Hostname:$NZBPO_Path/"
 
 if [[ $NZBPO_Protocol = "Rsync" ]]; then
@@ -62,7 +64,7 @@ if [[ $NZBPO_Protocol = "Rsync" ]]; then
       touch _error_
       fi
    else
-   echo "Transfer with auth"
+   sshpass -p '$NZBPO_Password' rsync ${opts[@]} --progress -av -e "ssh -p $NZBPO_Port" "$src" "$destssh" | stdbuf -oL tr '\r' '\n'
       if [ $? = 1 ]; then
       touch _error_
       fi
@@ -76,23 +78,21 @@ if [[ $NZBPO_Protocol = "SCP" ]]; then
       touch _error_
       fi
    else
-   echo "Transfer with auth"
+   sshpass -p '$NZBPO_Password' scp -P $NZBPO_Port "$src" "$destssh"
       if [ $? = 1 ]; then
       touch _error_
       fi
    fi
 fi
 
-
-
 if [[ $NZBPO_Protocol = "FTP" ]]; then
    if [[ $NZBPO_Passauth = "no" ]]; then
-   lftp -e "mirror -R {$src} {$dest}" -u anonymous {$NZBPO_Hostname}
+   ncftpput -R -v -u "anonymous" -p "" "$NZBPO_Hostname" "$dest" "$src"
       if [ $? = 1 ]; then
       touch _error_
       fi
    else
-   lftp -e "mirror -R {$src} {$dest}" -u {$NZBPO_Username},{$NZBPO_Password} {$NZB_Hostname}
+   ncftpput -R -v -u "$NZBPO_Username" -p "$NZBPO_Password" "$NZBPO_Hostname" "$dest" "$src"
       if [ $? = 1 ]; then
       touch _error_
       fi
@@ -100,7 +100,7 @@ if [[ $NZBPO_Protocol = "FTP" ]]; then
 fi
 
 if [[ $NZBPO_Protocol = "Local" ]]; then
-   cp --args -r "$src" "$dest"
+   cp -rv "$src" "$dest"
       if [ $? = 1 ]; then
       touch _error_
       fi
