@@ -12,6 +12,7 @@
 #
 # NOTE: Important note for running this Script you need the following:
 # - rsync
+# - lftp (in case you want to use FTP Transfer)
 #
 # - For now you need SSH Keyfile-Autologin (ssh-keygen) to the destination
 # Server. Log/Pass authentication is planned in future Versions of this
@@ -85,25 +86,15 @@ fi
 
 if [[ $NZBPO_Protocol = "FTP" ]]; then
    if [[ $NZBPO_Passauth = "no" ]]; then
-   echo "open $NZBPO_Hostname" > ftp.cmd
-   echo "user anonymous" >> ftp.cmd
-   echo "put $src $dest" >> ftp.cmd
-   echo "bye" >> ftp.cmd 
-   ftp -n < ftp.cmd
+   lftp -e "mirror -R {$src} {$dst}" -u anonymous {$NZBPO_Hostname}
       if [ $? = 1 ]; then
       touch _error_
       fi
-   rm ftp.cmd
    else
-   echo "open $NZBPO_Hostname" > ftp.cmd
-   echo "user $NZBPO_Username $NZBPO_Password" >> ftp.cmd
-   echo "put $src $dest" >> ftp.cmd
-   echo "bye" >> ftp.cmd 
-   ftp -n < ftp.cmd
+   lftp -e "mirror -R {$src} {$dst}" -u {$NZBPO_Username},{$NZBPO_Password} {$NZB_Hostname}
       if [ $? = 1 ]; then
       touch _error_
       fi
-   rm ftp.cmd
    fi
 fi
 
