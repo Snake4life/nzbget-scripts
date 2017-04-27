@@ -52,11 +52,12 @@
 ################################################################################
 
 src="$NZBPP_DIRECTORY"
-dest="$NZBPO_Username@$NZBPO_Hostname:$NZBPO_Path/"
+dest="$NZBPO_Path/"
+destssh="$NZBPO_Username@$NZBPO_Hostname:$NZBPO_Path/"
 
 if [[ $NZBPO_Protocol = "Rsync" ]]; then
    if [[ $NZBPO_Passauth = "no" ]]; then
-   rsync ${opts[@]} --progress -av -e "ssh -p $NZBPO_Port" "$src" "$dest" | stdbuf -oL tr '\r' '\n'
+   rsync ${opts[@]} --progress -av -e "ssh -p $NZBPO_Port" "$src" "$destssh" | stdbuf -oL tr '\r' '\n'
       if [ $? = 1 ]; then
       touch _error_
       fi
@@ -70,7 +71,7 @@ fi
 
 if [[ $NZBPO_Protocol = "SCP" ]]; then
    if [[ $NZBPO_Passauth = "no" ]]; then
-   scp -P $NZBPO_Port "$src" "$dest"
+   scp -P $NZBPO_Port "$src" "$destssh"
       if [ $? = 1 ]; then
       touch _error_
       fi
@@ -86,12 +87,12 @@ fi
 
 if [[ $NZBPO_Protocol = "FTP" ]]; then
    if [[ $NZBPO_Passauth = "no" ]]; then
-   lftp -e "mirror -R {$src} {$dst}" -u anonymous {$NZBPO_Hostname}
+   lftp -e "mirror -R {$src} {$dest}" -u anonymous {$NZBPO_Hostname}
       if [ $? = 1 ]; then
       touch _error_
       fi
    else
-   lftp -e "mirror -R {$src} {$dst}" -u {$NZBPO_Username},{$NZBPO_Password} {$NZB_Hostname}
+   lftp -e "mirror -R {$src} {$dest}" -u {$NZBPO_Username},{$NZBPO_Password} {$NZB_Hostname}
       if [ $? = 1 ]; then
       touch _error_
       fi
