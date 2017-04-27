@@ -1,6 +1,6 @@
 # nzbget-scripts
 
-ReTransfer.sh: Send your downloaded files to another Machine via rsync, scp or ftp.
+ReTransfer.sh: Send your downloaded files to another Machine via rsync, scp or ftp.\n
 This script is meant to be used with a Unix/POSIX System. If you want to adapt it for Windows dont hesitate to do it. (-:
 
 
