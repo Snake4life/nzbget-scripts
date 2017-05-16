@@ -9,6 +9,8 @@
 #
 # Example: [[Computer]]Debian8-Final.iso{{12345}}.nzb
 #
+# This script is meant to be used with a Unix/POSIX System. If you want to
+# adapt it for Windows dont hesitate to do it. (-:
 #
 # It switches the Category to "Computer" and set the password "12345".
 #
