@@ -58,8 +58,8 @@
 ################################################################################
 
 src="$NZBPP_DIRECTORY"
-dest="$NZBPO_Path"
-destssh="$NZBPO_Username@$NZBPO_Hostname:$NZBPO_Path/"
+dest="$NZBPO_Destination"
+destssh="$NZBPO_Username@$NZBPO_Hostname:$NZBPO_Destination/"
 
 if [[ $NZBPO_Protocol = "Rsync" ]]; then
    if [[ $NZBPO_Passauth = "no" ]]; then
